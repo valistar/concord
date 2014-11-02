@@ -1,0 +1,8 @@
+# src/Spelunker/TestBundle/Resources/config/routing.yml
+test1:
+  path: /spellunk
+  defaults: { _controller: SpelunkerTestBundle:Test:test1 }
+
+test2:
+  path: /spellunker/{blob}
+  defaults: { _controller: SpelunkerTestBundle:Test:test2 }

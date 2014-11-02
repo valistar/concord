@@ -1,0 +1,4 @@
+# src/Concord/ImportBundle/Resources/config/routing.yml
+test1:
+  path: /import
+  defaults: { _controller: ConcordImportBundle:TrionDump:process }
