@@ -1,0 +1,92 @@
+Concord\BrowseBundle\Entity\NPC:
+  type: entity
+  table: npc
+  id:
+    id:
+      type: bigint
+  fields:
+    nameEN:
+      type: string
+      column: name_en
+    nameFR:
+      type: string
+      column: name_fr
+    nameDE:
+      type: string
+      column: name_de
+    title:
+      type: json_array
+      nullable: true
+      options:
+        default: null
+    level:
+      type: json_array
+      nullable: true
+      options:
+        default: null
+    zone:
+      type: json_array
+      nullable: true
+      options:
+        default: null
+    scene:
+      type: json_array
+      nullable: true
+      options:
+        default: null
+    category:
+      type: string
+      nullable: true
+      options:
+          default: null
+    portrait:
+      type: string
+      options:
+        default: 'Default'
+    type:
+      type: json_array
+      nullable: true
+      options:
+        default: null
+    plane:
+      type: string
+      nullable: true
+      options:
+        default: null
+    relationships:
+      type: json_array
+      nullable: true
+      options:
+        default: null
+    notorietyRewards:
+      type: json_array
+      column: notoriety_rewards
+      nullable: true
+      options:
+        default: null
+    sells: #TODO Entity
+      type: json_array
+      nullable: true
+      options:
+        default: null
+    skillTrainer: #TODO See if this is ever an array.
+      type: json_array
+      column: skill_trainer
+      nullable: true
+      options:
+        default: null
+    roleTrainer: #TODO See if this is ever an array.
+      type: json_array
+      column: role_trainer
+      nullable: true
+      options:
+        default: null
+    addonId:
+      type: string
+      column: addon_id
+    firstCompletedBy:
+      type: json_array
+      column: discovered_by
+      nullable: true
+      options:
+        default: null

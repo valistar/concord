@@ -1,0 +1,199 @@
+Concord\BrowseBundle\Entity\Quest:
+  type: entity
+  table: quest
+  id:
+    id:
+      type: bigint
+  fields:
+    addonId:
+      type: string
+      column: addon_id
+    nameEN:
+      type: string
+      column: name_en
+    nameFR:
+      type: string
+      column: name_fr
+    nameDE:
+      type: string
+      column: name_de
+    level:
+      type: smallint
+      options:
+        default: 0
+    zone:
+      type: string
+      nullable: true
+      options:
+        default: null
+    scene:
+      type: json_array
+      nullable: true
+      options:
+        default: null
+    scope:
+      type: json_array
+      nullable: true
+      options:
+        default: null
+    type:
+      type: json_array
+      nullable: true
+      options:
+        default: null
+    events:
+      type: json_array
+      nullable: true
+      options:
+        default: null
+    canShare:
+      type: boolean
+      column: shareable
+      options:
+        default: false
+    repeatable:
+      type: string
+      options:
+        default: 'No'
+    rewards:
+      type: json_array
+      nullable: true
+      options:
+        default: null
+    repeatRewards:
+      type: json_array
+      column: repeat_rewards
+      nullable: true
+      options:
+        default: null
+    secondsToComplete:
+      type: smallint
+      column: seconds
+      options:
+        default: 0
+    shortDescription:
+      type: json_array
+      column: short_description
+      nullable: true
+      options:
+        default: null
+    longDescription:
+      type: json_array
+      column: description
+      nullable: true
+      options:
+        default: null
+    denouement:
+      type: json_array
+      nullable: true
+      options:
+        default: null
+    objectives:
+      type: json_array
+      nullable: true
+      options:
+        default: null
+    objectivesCompleteText:
+      type: json_array
+      column: objectives_complete_text
+      nullable: true
+      options:
+        default: null
+    faction:
+      type: string
+      nullable: true
+      options:
+        default: null
+    guildLevel:
+      type: smallint
+      column: guild_level
+      nullable: true
+      options:
+        default: null
+    firstCompletedBy:
+      type: json_array
+      column: discovered_by
+      nullable: true
+      options:
+        default: null
+  manyToMany:
+    givers:
+      targetEntity: NPC
+      joinTable:
+        name: quest_givers
+        joinColumns:
+          quest_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          npc_id:
+            referencedColumnName: id
+    completers:
+      targetEntity: NPC
+      joinTable:
+        name: quest_completers
+        joinColumns:
+          quest_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          npc_id:
+            referencedColumnName: id
+    requireNone: #Couldnt figure out how to do a single table with three columns for these associations, using the ORM.
+      targetEntity: Quest
+      joinTable:
+        name: quest_required_none
+        joinColumns:
+          quest_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          required_id:
+            referencedColumnName: id
+    requireOnNone:
+       targetEntity: Quest
+       joinTable:
+         name: quest_required_on_none
+         joinColumns:
+           quest_id:
+             referencedColumnName: id
+         inverseJoinColumns:
+           required_id:
+             referencedColumnName: id
+    requireAny:
+      targetEntity: Quest
+      joinTable:
+        name: quest_required_any
+        joinColumns:
+          quest_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          required_id:
+            referencedColumnName: id
+    requireOnAny:
+      targetEntity: Quest
+      joinTable:
+        name: quest_required_on_any
+        joinColumns:
+          quest_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          required_id:
+            referencedColumnName: id
+    requireAll:
+      targetEntity: Quest
+      joinTable:
+        name: quest_required_all
+        joinColumns:
+          quest_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          required_id:
+            referencedColumnName: id
+    requireOnAll:
+      targetEntity: Quest
+      joinTable:
+        name: quest_required_on_all
+        joinColumns:
+          quest_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          required_id:
+            referencedColumnName: id
