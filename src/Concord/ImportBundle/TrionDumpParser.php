@@ -373,13 +373,71 @@ class TrionDumpParser {
                     $quest->setObjectivesCompleteText($discovery['ObjectivesCompleteText']);
                     $quest->setFirstCompletedBy($discovery['FirstCompletedBy']);
                     if($associations) {
-                        //TODO Associations
+                        $associated = true;
+                        foreach($givers as $giver) {
+                            //TODO Check out item drop givers and world item givers.
+                            $npc = $repo['NPC']->find($giver);
+                            if($npc) {
+                                $quest->addGiver($npc);
+                            }
+                            else {
+                                $associated = false;
+                            }
+                        }
+                        foreach($completers as $completer) {
+                            //TODO Check out item drop completers and world item completers.
+                            $npc = $repo['NPC']->find($completer);
+                            if($npc) {
+                                $quest->addGiver($npc);
+                            }
+                            else {
+                                $associated = false;
+                            }
+                        }
+                        foreach($require as $category => $ids) {
+                            foreach($ids as $id) {
+                                $require = $repo['Quest']->find($id);
+                                if($require) {
+                                    $adder = 'add'.$category;
+                                    $quest->$adder($require);
+                                }
+                                else {
+                                    $associated = false;
+                                }
+                            }
+                        }
                     }
                     if(!$associations || $associated) {
                         $processed[] = $data['id'];
                     }
                     break;
                 case 'NPC':
+                    $npc = $repo['NPC']->find($discovery['Id']);
+                    if(!$npc) $npc = new \Concord\BrowseBundle\Entity\NPC($discovery['Id']); //Hmm. Why do I need this? Why doesnt 'use' work?
+                    $this->_em->persist($npc);
+
+                    if(!array_key_exists('PrimaryName', $discovery) || !$discovery['PrimaryName']['English']) {
+                        $discovery['PrimaryName'] = array('English' => '', 'French' => '', 'German' => '');
+                    }
+
+                    $npc->setNameEN($discovery['PrimaryName']['English']);
+                    $npc->setNameDE($discovery['PrimaryName']['German']);
+                    $npc->setNameFR($discovery['PrimaryName']['French']);
+                    $npc->setTitle();
+                    $npc->setLevel();
+                    $npc->setZone();
+                    $npc->setScene();
+                    $npc->setCategory();
+                    $npc->setPortrait();
+                    $npc->setType();
+                    $npc->setPlane();
+                    $npc->setRelationships();
+                    $npc->setNotorietyRewards();
+                    $npc->setSells();
+                    $npc->setSkillTrainer();
+                    $npc->setRoleTrainer();
+                    $npc->setAddonId($discovery['AddonType']);
+                    $npc->setFirstCompletedBy();
 
                     break;
             }

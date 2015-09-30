@@ -42,7 +42,7 @@ Concord\BrowseBundle\Entity\NPC:
     portrait:
       type: string
       options:
-        default: 'Default'
+        default: 'Normal'
     type:
       type: json_array
       nullable: true

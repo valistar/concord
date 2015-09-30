@@ -354,7 +354,7 @@ class Quest
      */
     public function setScene($scene)
     {
-        if(!is_array($scene)) $scene = array($scene);
+        if($scene && !is_array($scene)) $scene = array($scene);
         $this->scene = $scene;
 
         return $this;
@@ -378,7 +378,7 @@ class Quest
      */
     public function setScope($scope)
     {
-        if(!is_array($scope)) $scope = array($scope);
+        if($scope && !is_array($scope)) $scope = array($scope);
         $this->scope = $scope;
 
         return $this;
@@ -402,7 +402,7 @@ class Quest
      */
     public function setType($type)
     {
-        if(!is_array($type)) $type = array($type);
+        if($type && !is_array($type)) $type = array($type);
         $this->type = $type;
 
         return $this;
@@ -426,7 +426,7 @@ class Quest
      */
     public function setEvents($events)
     {
-        if(!is_array($events)) $events = array($events);
+        if($events && !is_array($events)) $events = array($events);
         $this->events = $events;
 
         return $this;
@@ -496,7 +496,7 @@ class Quest
      */
     public function setRewards($rewards)
     {
-        if(!is_array($rewards)) $rewards = array($rewards);
+        if($rewards && !is_array($rewards)) $rewards = array($rewards);
         $this->rewards = $rewards;
 
         return $this;
@@ -520,7 +520,7 @@ class Quest
      */
     public function setRepeatRewards($repeatRewards)
     {
-        if(!is_array($repeatRewards)) $repeatRewards = array($repeatRewards);
+        if($repeatRewards && !is_array($repeatRewards)) $repeatRewards = array($repeatRewards);
         $this->repeatRewards = $repeatRewards;
 
         return $this;
@@ -567,7 +567,7 @@ class Quest
      */
     public function setShortDescription($shortDescription)
     {
-        if(!is_array($shortDescription)) $shortDescription = array($shortDescription);
+        if($shortDescription && !is_array($shortDescription)) $shortDescription = array($shortDescription);
         $this->shortDescription = $shortDescription;
 
         return $this;
@@ -591,7 +591,7 @@ class Quest
      */
     public function setLongDescription($longDescription)
     {
-        if(!is_array($longDescription)) $longDescription = array($longDescription);
+        if($longDescription && !is_array($longDescription)) $longDescription = array($longDescription);
         $this->longDescription = $longDescription;
 
         return $this;
@@ -615,7 +615,7 @@ class Quest
      */
     public function setDenouement($denouement)
     {
-        if(!is_array($denouement)) $denouement = array($denouement);
+        if($denouement && !is_array($denouement)) $denouement = array($denouement);
         $this->denouement = $denouement;
 
         return $this;
@@ -639,7 +639,7 @@ class Quest
      */
     public function setObjectives($objectives)
     {
-        if(!is_array($objectives)) $objectives = array($objectives);
+        if($objectives && !is_array($objectives)) $objectives = array($objectives);
         $this->objectives = $objectives;
 
         return $this;
@@ -663,7 +663,7 @@ class Quest
      */
     public function setObjectivesCompleteText($objectivesCompleteText)
     {
-        if(!is_array($objectivesCompleteText)) $objectivesCompleteText = array($objectivesCompleteText);
+        if($objectivesCompleteText && !is_array($objectivesCompleteText)) $objectivesCompleteText = array($objectivesCompleteText);
         $this->objectivesCompleteText = $objectivesCompleteText;
 
         return $this;
@@ -733,7 +733,7 @@ class Quest
      */
     public function setFirstCompletedBy($firstCompletedBy)
     {
-        if(!is_array($firstCompletedBy)) $firstCompletedBy = array($firstCompletedBy);
+        if($firstCompletedBy && !is_array($firstCompletedBy)) $firstCompletedBy = array($firstCompletedBy);
         $this->firstCompletedBy = $firstCompletedBy;
 
         return $this;
@@ -757,6 +757,9 @@ class Quest
      */
     public function addGiver(\Concord\BrowseBundle\Entity\NPC $givers)
     {
+        foreach($this->givers as $giver) { //TODO Does this work well with doctrines lazy loading? I assume it doesn't add any overhead because accessing givers at all will force the DB hit.
+            if($giver->getId() == $givers->getId()) return $this;
+        }
         $this->givers[] = $givers;
 
         return $this;
@@ -790,6 +793,9 @@ class Quest
      */
     public function addCompleter(\Concord\BrowseBundle\Entity\NPC $completers)
     {
+        foreach($this->completers as $completer) {
+            if($completer->getId() == $completers->getId()) return $this;
+        }
         $this->completers[] = $completers;
 
         return $this;
@@ -823,6 +829,9 @@ class Quest
      */
     public function addRequireNone(\Concord\BrowseBundle\Entity\Quest $requireNone)
     {
+        foreach($this->requireNone as $require) {
+            if($require->getId() == $requireNone->getId()) return $this;
+        }
         $this->requireNone[] = $requireNone;
 
         return $this;
@@ -856,6 +865,9 @@ class Quest
      */
     public function addRequireOnNone(\Concord\BrowseBundle\Entity\Quest $requireOnNone)
     {
+        foreach($this->requireNone as $require) {
+            if($require->getId() == $requireNone->getId()) return $this;
+        }
         $this->requireOnNone[] = $requireOnNone;
 
         return $this;
@@ -889,6 +901,9 @@ class Quest
      */
     public function addRequireAny(\Concord\BrowseBundle\Entity\Quest $requireAny)
     {
+        foreach($this->requireAny as $require) {
+            if($require->getId() == $requireAny->getId()) return $this;
+        }
         $this->requireAny[] = $requireAny;
 
         return $this;
@@ -922,6 +937,9 @@ class Quest
      */
     public function addRequireOnAny(\Concord\BrowseBundle\Entity\Quest $requireOnAny)
     {
+        foreach($this->requireOnAny as $require) {
+            if($require->getId() == $requireOnAny->getId()) return $this;
+        }
         $this->requireOnAny[] = $requireOnAny;
 
         return $this;
@@ -955,6 +973,9 @@ class Quest
      */
     public function addRequireAll(\Concord\BrowseBundle\Entity\Quest $requireAll)
     {
+        foreach($this->requireAll as $require) {
+            if($require->getId() == $requireAll->getId()) return $this;
+        }
         $this->requireAll[] = $requireAll;
 
         return $this;
@@ -988,6 +1009,9 @@ class Quest
      */
     public function addRequireOnAll(\Concord\BrowseBundle\Entity\Quest $requireOnAll)
     {
+        foreach($this->requireOnAll as $require) {
+            if($require->getId() == $requireOnAll->getId()) return $this;
+        }
         $this->requireOnAll[] = $requireOnAll;
 
         return $this;
